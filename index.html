@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The "I Honestly Don't Know" Biblical Quiz</title>
+  <title>Group 5: The Discernment Quiz</title>
   <style>
     :root {
-      --primary: #3d405b; /* Deep Navy */
-      --accent: #e07a5f;  /* Terracotta / Warm Orange */
+      --primary: #3d405b;
+      --accent: #e07a5f; 
       --bg-gradient: linear-gradient(135deg, #f2cc8f 0%, #f4f1de 100%);
       --text-dark: #3d405b;
       --text-light: #8187a2;
@@ -32,7 +32,7 @@
       background: var(--white);
       padding: 40px;
       width: 100%;
-      max-width: 500px;
+      max-width: 550px;
       border-radius: 24px;
       box-shadow: 0 20px 40px rgba(61, 64, 91, 0.15);
       text-align: center;
@@ -43,7 +43,6 @@
     h2 { font-size: 1.4rem; color: var(--accent); margin-bottom: 1.5rem; }
     p { font-size: 1.05rem; line-height: 1.6; color: var(--text-dark); }
 
-    /* The Humor Badge */
     .badge {
       display: inline-block;
       background: #f2cc8f;
@@ -86,10 +85,7 @@
       margin-top: 20px;
     }
 
-    .btn-main:hover {
-      background: #2a2d42;
-      color: white;
-    }
+    .btn-main:hover { background: #2a2d42; }
 
     .highlight-box {
       background: #f4f1de;
@@ -100,21 +96,41 @@
       text-align: left;
     }
 
-    .flyer ul {
-      text-align: left;
-      list-style: none;
-      padding: 0;
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-top: 20px;
     }
 
-    .flyer li {
-      margin-bottom: 12px;
-      padding-left: 25px;
-      position: relative;
+    .team-member {
+      background: #fbfbf8;
+      padding: 15px;
+      border-radius: 15px;
+      border: 1px solid #f4f1de;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
+    .member-5 { grid-column: span 2; width: 60%; margin: 0 auto; }
+
+    .profile-pic {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        margin-bottom: 10px;
+        object-fit: cover;
+        border: 2px solid var(--white);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .member-name { font-weight: 700; font-size: 0.95rem; color: var(--primary); }
+    .member-tagline { font-size: 0.8rem; color: var(--text-light); font-style: italic; margin-top: 4px;}
+
+    .flyer ul { text-align: left; list-style: none; padding: 0; }
+    .flyer li { margin-bottom: 12px; padding-left: 25px; position: relative; }
     .flyer li::before { content: "☕"; position: absolute; left: 0; }
-
-    .footer-text { font-size: 0.85rem; color: var(--text-light); margin-top: 20px; }
 
     .hidden { display: none; }
 
@@ -132,7 +148,7 @@
     <h1>The "I Honestly Don't Know" Quiz</h1>
     <p>Let’s be real: Marriage is a beautiful mystery. But sometimes, it’s just <i>mystifying.</i></p>
     <p style="font-size: 0.9rem;">Take 30 seconds to reflect on a question that usually gets everyone awkward.</p>
-    <button class="btn-main" onclick="startQuiz()">Let's dive in</button>
+    <button class="btn-main" onclick="showScreen('quiz')">Let's dive in</button>
   </div>
 
   <div class="container hidden" id="quiz">
@@ -140,19 +156,16 @@
     <p style="font-weight: 600; text-align: left; margin-bottom: 25px;">
         According to the Bible, should a Christian stay in a marriage where there is ongoing physical abuse?
     </p>
-    
-    <button onclick="showInvite()">🤔 "Yes, because divorce is the only unforgivable sin?" (Wait, is it?)</button>
-    <button onclick="showInvite()">😩 "Yes, but I'll pray really hard that they stop hitting me?"</button>
-    <button onclick="showInvite()">🚫 "No, because abuse violates the covenant."</button>
-    <button onclick="showInvite()">🏳️ "I’m just going to stare at the floor and hope you ask someone else."</button>
-    
-    <p class="footer-text">There are no "wrong" answers here—only opportunities for a better conversation.</p>
+    <button onclick="showScreen('invite')">🤔 "Yes, because divorce is the only unforgivable sin?"</button>
+    <button onclick="showScreen('invite')">😩 "Yes, but I'll pray really hard that they stop hitting me?"</button>
+    <button onclick="showScreen('invite')">🚫 "No, because abuse violates the covenant."</button>
+    <button onclick="showScreen('invite')">🏳️ "I’m just going to stare at the floor and hope you ask someone else."</button>
   </div>
 
   <div class="container flyer hidden" id="invite">
-    <div class="badge">Spoilers: God loves you</div>
-    <h1>Let’s unpack that.</h1>
-    <p>If that question felt heavy, it’s because it is. Deep discernment requires more than a simple answer.</p>
+    <div class="badge" id="invite-badge">Spoilers: God loves you</div>
+    <h1 id="invite-title">Let’s unpack that.</h1>
+    <p id="invite-intro-text">If that question felt heavy, it’s because it is. Deep discernment requires more than a simple answer.</p>
 
     <div class="highlight-box">
       <strong>Join our Tuesday Seminar:</strong><br>
@@ -160,27 +173,77 @@
     </div>
 
     <ul>
-      <li>Divorce: The verse you're thinking of might not mean what you think.</li>
-      <li>Covenants: What happens when the "vow" is physically broken?</li>
-      <li>Suffering: How did God care for the vulnerable?</li>
+      <li>Divorce: What the verses actually mean.</li>
+      <li>Covenants: When the "vow" is physically broken.</li>
+      <li>Suffering: God’s heart for the vulnerable.</li>
     </ul>
 
-    <div style="background: var(--primary); color: white; padding: 15px; border-radius: 12px; margin-top: 15px;">
+    <div style="background: #fdf2e9; border: 2px solid #f2cc8f; padding: 15px; border-radius: 12px; margin-top: 15px;">
       <strong>🗓 Tuesday | 🕥 10:30 AM</strong><br>
-      <span style="font-size: 0.8rem; opacity: 0.8;">Coffee will not be provided—please have yours at the Commons.</span>
+      <span style="font-size: 0.8rem; opacity: 0.8; color: var(--text-light);">Coffee will not be provided—please have yours at the Commons.</span>
     </div>
     
-    <button class="btn-main" onclick="location.reload()">Back to Square One</button>
+    <button id="invite-action-btn" class="btn-main" onclick="showScreen('team')">Checkout our team</button>
+  </div>
+
+  <div class="container hidden" id="team">
+    <div class="badge">The Minds Behind Group 5</div>
+    <h2>Meet the Team</h2>
+    <div class="team-grid">
+        <div class="team-member">
+            <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Jack&backgroundType=gradientLinear&backgroundColor=f2cc8f" alt="Samuel" class="profile-pic">
+            <span class="member-name">Samuel</span>
+            <span class="member-tagline">"The Visionary"</span>
+          </div>
+    
+          <div class="team-member">
+            <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Shalem&backgroundType=gradientLinear&backgroundColor=e07a5f" alt="Shalem" class="profile-pic">
+            <span class="member-name">Shalem</span>
+            <span class="member-tagline">"The Bible Scholar"</span>
+          </div>
+    
+          <div class="team-member">
+            <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Daphi&backgroundType=gradientLinear&backgroundColor=e07a5f" alt="Soror" class="profile-pic">
+            <span class="member-name">Soror</span>
+            <span class="member-tagline">"The Design Guru"</span>
+          </div>
+    
+          <div class="team-member">
+            <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Soror&backgroundType=gradientLinear&backgroundColor=f2cc8f" alt="Daphi" class="profile-pic">
+            <span class="member-name">Daphi</span>
+            <span class="member-tagline">"The Researcher"</span>
+          </div>
+    
+          <div class="team-member member-5">
+            <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Gaurav&backgroundType=gradientLinear&backgroundColor=f2cc8f" alt="Gaurav" class="profile-pic">
+            <span class="member-name">Gaurav</span>
+            <span class="member-tagline">"The New Guy"</span>
+          </div>
+    </div>
+    <button class="btn-main" style="margin-top: 30px;" onclick="showScreen('invite')">Back to Invite</button>
   </div>
 
   <script>
-    function startQuiz() {
-        document.getElementById("home").classList.add("hidden");
-        document.getElementById("quiz").classList.remove("hidden");
-    }
-    function showInvite() {
-        document.getElementById("quiz").classList.add("hidden");
-        document.getElementById("invite").classList.remove("hidden");
+    function showScreen(screenId) {
+        const inviteBadge = document.getElementById('invite-badge');
+        const inviteTitle = document.getElementById('invite-title');
+        const inviteIntro = document.getElementById('invite-intro-text');
+        const inviteBtn = document.getElementById('invite-action-btn');
+        const currentScreenIsTeam = !document.getElementById('team').classList.contains('hidden');
+
+        // Logic for returning from Team to Invite
+        if (screenId === 'invite' && currentScreenIsTeam) {
+            inviteBadge.innerText = "Thanks for stopping by!";
+            inviteTitle.innerText = "See you Tuesday?";
+            inviteIntro.style.display = "none";
+            inviteBtn.innerText = "Back to Square One";
+            inviteBtn.onclick = () => location.reload(); // Reload takes them home
+        }
+
+        // Standard screen switching
+        document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
+        document.getElementById(screenId).classList.remove('hidden');
+        window.scrollTo(0,0);
     }
   </script>
 </body>
