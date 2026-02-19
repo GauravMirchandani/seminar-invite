@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The "I Honestly Don't Know" Biblical Quiz</title>
+  <style>
+    :root {
+      --primary: #3d405b; /* Deep Navy */
+      --accent: #e07a5f;  /* Terracotta / Warm Orange */
+      --bg-gradient: linear-gradient(135deg, #f2cc8f 0%, #f4f1de 100%);
+      --text-dark: #3d405b;
+      --text-light: #8187a2;
+      --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+  
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-dark);
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }   
+
+    .container {
+      background: var(--white);
+      padding: 40px;
+      width: 100%;
+      max-width: 500px;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(61, 64, 91, 0.15);
+      text-align: center;
+      position: relative;
+    }
+
+    h1 { font-size: 1.8rem; margin-bottom: 0.5rem; color: var(--primary); }
+    h2 { font-size: 1.4rem; color: var(--accent); margin-bottom: 1.5rem; }
+    p { font-size: 1.05rem; line-height: 1.6; color: var(--text-dark); }
+
+    /* The Humor Badge */
+    .badge {
+      display: inline-block;
+      background: #f2cc8f;
+      color: #3d405b;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 18px;
+      margin: 10px 0;
+      font-size: 1rem;
+      border-radius: 15px;
+      border: 2px solid #f4f1de;
+      background: #fbfbf8;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+      display: flex;
+      align-items: center;
+    }
+
+    button:hover {
+      border-color: var(--accent);
+      background: #fffafa;
+      transform: translateX(5px);
+    }
+
+    .btn-main {
+      background: var(--primary);
+      color: white;
+      justify-content: center;
+      font-weight: 700;
+      border: none;
+      margin-top: 20px;
+    }
+
+    .btn-main:hover {
+      background: #2a2d42;
+      color: white;
+    }
+
+    .highlight-box {
+      background: #f4f1de;
+      padding: 20px;
+      border-radius: 15px;
+      margin: 20px 0;
+      border: 1px dashed var(--accent);
+      text-align: left;
+    }
+
+    .flyer ul {
+      text-align: left;
+      list-style: none;
+      padding: 0;
+    }
+
+    .flyer li {
+      margin-bottom: 12px;
+      padding-left: 25px;
+      position: relative;
+    }
+
+    .flyer li::before { content: "☕"; position: absolute; left: 0; }
+
+    .footer-text { font-size: 0.85rem; color: var(--text-light); margin-top: 20px; }
+
+    .hidden { display: none; }
+
+    @keyframes popIn {
+      0% { transform: scale(0.9); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .container:not(.hidden) { animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="home">
+    <div class="badge">It's anonymous, we promise 🫣</div>
+    <h1>The "I Honestly Don't Know" Quiz</h1>
+    <p>Let’s be real: Marriage is a beautiful mystery. But sometimes, it’s just <i>mystifying.</i></p>
+    <p style="font-size: 0.9rem;">Take 30 seconds to reflect on a question that usually gets everyone awkward.</p>
+    <button class="btn-main" onclick="startQuiz()">Let's dive in</button>
+  </div>
+
+  <div class="container hidden" id="quiz">
+    <h2>The Big Question</h2>
+    <p style="font-weight: 600; text-align: left; margin-bottom: 25px;">
+        According to the Bible, should a Christian stay in a marriage where there is ongoing physical abuse?
+    </p>
+    
+    <button onclick="showInvite()">🤔 "Yes, because divorce is the only unforgivable sin?" (Wait, is it?)</button>
+    <button onclick="showInvite()">😩 "Yes, but I'll pray really hard that they stop hitting me?"</button>
+    <button onclick="showInvite()">🚫 "No, because abuse violates the covenant."</button>
+    <button onclick="showInvite()">🏳️ "I’m just going to stare at the floor and hope you ask someone else."</button>
+    
+    <p class="footer-text">There are no "wrong" answers here—only opportunities for a better conversation.</p>
+  </div>
+
+  <div class="container flyer hidden" id="invite">
+    <div class="badge">Spoilers: God loves you</div>
+    <h1>Let’s unpack that.</h1>
+    <p>If that question felt heavy, it’s because it is. Deep discernment requires more than a simple answer.</p>
+
+    <div class="highlight-box">
+      <strong>Join our Tuesday Seminar:</strong><br>
+      We're looking at what the Bible <i>actually</i> says about marriage, abuse and discernment.
+    </div>
+
+    <ul>
+      <li>Divorce: The verse you're thinking of might not mean what you think.</li>
+      <li>Covenants: What happens when the "vow" is physically broken?</li>
+      <li>Suffering: How did God care for the vulnerable?</li>
+    </ul>
+
+    <div style="background: var(--primary); color: white; padding: 15px; border-radius: 12px; margin-top: 15px;">
+      <strong>🗓 Tuesday | 🕥 10:30 AM</strong><br>
+      <span style="font-size: 0.8rem; opacity: 0.8;">Coffee will not be provided—please have yours at the Commons.</span>
+    </div>
+    
+    <button class="btn-main" onclick="location.reload()">Back to Square One</button>
+  </div>
+
+  <script>
+    function startQuiz() {
+        document.getElementById("home").classList.add("hidden");
+        document.getElementById("quiz").classList.remove("hidden");
+    }
+    function showInvite() {
+        document.getElementById("quiz").classList.add("hidden");
+        document.getElementById("invite").classList.remove("hidden");
+    }
+  </script>
+</body>
+</html>
